@@ -22,14 +22,11 @@ Gem::Specification.new do |spec|
     'bug_tracker_uri' => 'https://github.com/bestwebua/mercadona/issues'
   }
 
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 2.7.0'
   spec.files = `git ls-files -z`.split("\x0").select { |f| f.match(%r{^(bin|lib)/|.ruby-version|mercadona.gemspec|LICENSE}) }
   spec.require_paths = %w[lib]
 
-  current_ruby_version = ::Gem::Version.new(::RUBY_VERSION)
-  ffaker_version = current_ruby_version >= ::Gem::Version.new('3.0.0') ? '~> 2.23' : '~> 2.21'
-
-  spec.add_development_dependency 'ffaker', ffaker_version
+  spec.add_development_dependency 'factory_bot', '~> 6.4', '>= 6.4.4'
   spec.add_development_dependency 'rake', '~> 13.2', '>= 13.2.1'
   spec.add_development_dependency 'rspec', '~> 3.13'
 end

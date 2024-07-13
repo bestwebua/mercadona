@@ -2,4 +2,5 @@
 
 module Mercadona
   require_relative '../mercadona/version'
+  require_relative '../mercadona/order_item'
 end

@@ -12,11 +12,11 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'https://github.com/bestwebua/mercadona'
   spec.license     = 'MIT'
 
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 2.7.0'
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = %w[lib]
 
-  spec.add_development_dependency 'ffaker'
+  spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
 end

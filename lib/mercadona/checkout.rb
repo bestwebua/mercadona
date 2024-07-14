@@ -3,7 +3,7 @@
 module Mercadona
   class Checkout
     DEFAULT_CURRENCY = '£'
-    INITIAL_AMOUNT = 0.0
+    INITIAL_AMOUNT = 0
 
     def initialize(discount_rules, currency = Mercadona::Checkout::DEFAULT_CURRENCY)
       @discount_rules = discount_rules
@@ -16,7 +16,7 @@ module Mercadona
     end
 
     def total
-      Mercadona::AmountFormatter.call(currency, calculate_amount)
+      Mercadona::AmountFormatter.call(currency, calculate_amount / 100.0)
     end
 
     private
@@ -31,7 +31,7 @@ module Mercadona
       basket.tally.inject(Mercadona::Checkout::INITIAL_AMOUNT) do |amount, (order_item, quantity)|
         next amount + Mercadona::DiscountResolver.call(discount_rules, order_item, quantity) if discount_order_item?(order_item)
 
-        amount + (order_item.price * quantity)
+        amount + (order_item.price_in_fractional_currency * quantity)
       end
     end
   end

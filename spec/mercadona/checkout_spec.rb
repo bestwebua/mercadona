@@ -22,7 +22,11 @@ RSpec.describe Mercadona::Checkout do
 
     context 'when order items without a discount' do
       let(:discount_rules) { {} }
-      let(:expected_amount) { product_tea.price + product_strawberry.price + product_coffee.price }
+      let(:expected_amount) do
+        (product_tea.price_in_fractional_currency +
+          product_strawberry.price_in_fractional_currency +
+            product_coffee.price_in_fractional_currency) / 100.0
+      end
 
       it 'returns amount for all order items without a discount' do
         expect(Mercadona::DiscountResolver).not_to receive(:call)
@@ -39,8 +43,12 @@ RSpec.describe Mercadona::Checkout do
 
     context 'when order items with a discount' do
       let(:discount_rules) { { product_coffee.product_code => [] } }
-      let(:discount_items_amount) { 42.0 }
-      let(:expected_amount) { product_tea.price + product_strawberry.price + discount_items_amount }
+      let(:discount_items_amount) { 420 }
+      let(:expected_amount) do
+        (product_tea.price_in_fractional_currency +
+          product_strawberry.price_in_fractional_currency +
+            discount_items_amount) / 100.0
+      end
 
       it 'returns amount for all order items using discount for certain items' do
         expect(Mercadona::DiscountResolver)
@@ -58,7 +66,7 @@ RSpec.describe Mercadona::Checkout do
             expected_amount
           )
           .and_call_original
-        expect(checkout_total).to eq("#{Mercadona::Checkout::DEFAULT_CURRENCY}#{expected_amount}")
+        expect(checkout_total).to eq("#{Mercadona::Checkout::DEFAULT_CURRENCY}#{format('%.2f', expected_amount)}")
       end
     end
   end

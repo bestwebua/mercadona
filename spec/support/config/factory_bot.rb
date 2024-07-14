@@ -18,6 +18,6 @@ RSpec.configure do |config|
 end
 
 FactoryBot.define do
-  initialize_with { new(attributes) }
+  initialize_with { new(**attributes) }
   to_create { |_| } # rubocop:disable Lint/EmptyBlock
 end

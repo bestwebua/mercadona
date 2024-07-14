@@ -20,6 +20,10 @@ module Mercadona
       def random_product_price
         ::Kernel.rand(1.0..12).round(2)
       end
+
+      def random_integer
+        ::Kernel.rand(1..42)
+      end
     end
   end
 end

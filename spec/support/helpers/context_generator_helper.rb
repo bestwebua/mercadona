@@ -40,6 +40,10 @@ module Mercadona
       def create_dummy_discount_type(result = random_integer)
         proc { result }
       end
+
+      def create_checkout(discount_rules)
+        Mercadona::Checkout.new(discount_rules)
+      end
     end
   end
 end

@@ -3,7 +3,7 @@
 module Mercadona
   module Discount
     class Base
-      DISCOUNT_RULES_ATTRS = %i[condition quantity discount].freeze
+      DISCOUNT_RULES_ATTRS = %i[condition quantity].freeze
 
       def self.call(discount_rule, order_item, order_item_quantity)
         new(discount_rule, order_item, order_item_quantity).call

@@ -21,8 +21,20 @@ module Mercadona
         ::Kernel.rand(1.0..12).round(2)
       end
 
-      def random_integer
-        ::Kernel.rand(1..42)
+      def random_integer(end_range = 42)
+        ::Kernel.rand(1..end_range)
+      end
+
+      def discount_rule_condition
+        %w[> >=].sample
+      end
+
+      def random_fraction
+        Rational(1, Rational(random_integer(10)))
+      end
+
+      def discount_rule_reduction
+        [nil, random_product_price, random_fraction].sample
       end
     end
   end

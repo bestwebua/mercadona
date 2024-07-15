@@ -17,6 +17,7 @@ words:
   - bagage
   - bagages
   - bestwebua
+  - bogo
   - changeloglint
   - codebases
   - codeclimate
@@ -32,3 +33,4 @@ words:
   - simplecov
   - stdlib
   - yamlint
+  - BOGO

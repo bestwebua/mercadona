@@ -11,5 +11,6 @@ module Mercadona
   require_relative '../mercadona/entity/order_item'
   require_relative '../mercadona/amount_formatter'
   require_relative '../mercadona/discount/base'
+  require_relative '../mercadona/discount/bogo'
   require_relative '../mercadona/checkout'
 end

@@ -42,7 +42,7 @@ RSpec.describe Mercadona::Checkout do
 
     context 'when order items with a discount' do
       let(:discount_items_amount) { 420 }
-      let(:type) { proc { discount_items_amount } }
+      let(:type) { create_dummy_discount_type(discount_items_amount) }
       let(:discount_rules) { { product_coffee.product_code => create(:discount_rule, :bulk_discount, type: type) } }
       let(:expected_amount) do
         (product_tea.price_in_fractional_currency +

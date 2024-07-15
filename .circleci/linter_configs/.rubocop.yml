@@ -51,7 +51,7 @@ Style/RedundantConstantBase:
   Enabled: false
 
 Layout/LineLength:
-  Max: 140
+  Max: 145
 
 Layout/ClassStructure:
   Enabled: true

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :discount_rule, class: 'Mercadona::Entity::DiscountRule' do
-    type { nil }
+    type { create_dummy_discount_type }
     condition { discount_rule_condition }
     quantity { random_integer }
     discount { discount_rule_reduction }

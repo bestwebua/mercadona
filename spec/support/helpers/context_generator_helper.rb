@@ -36,6 +36,10 @@ module Mercadona
       def discount_rule_reduction
         [nil, random_product_price, random_fraction].sample
       end
+
+      def create_dummy_discount_type(result = random_integer)
+        proc { result }
+      end
     end
   end
 end

@@ -26,6 +26,14 @@ module Mercadona
       Mercadona::Discount::Base::DISCOUNT_RULES_ATTRS.each do |method_name|
         define_method(method_name) { discount_rule.public_send(method_name) }
       end
+
+      def discount_case?
+        order_item_quantity.public_send(condition, quantity)
+      end
+
+      def amount_without_discount
+        @amount_without_discount ||= order_item_price * order_item_quantity
+      end
     end
   end
 end

@@ -4,5 +4,18 @@ detectors:
   IrresponsibleModule:
     enabled: false
 
+  ManualDispatch:
+    exclude:
+      - Mercadona::Entity#discount_class_valid?
+
+  ModuleInitialize:
+    exclude:
+      - Mercadona::Entity
+
+  UtilityFunction:
+    exclude:
+      - Mercadona::Entity#comparison_operator_valid?
+      - Mercadona::Entity#discount_class_valid?
+
 exclude_paths:
   - spec/support/helpers

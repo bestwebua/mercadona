@@ -29,7 +29,6 @@ RSpec.describe Mercadona::Checkout do
       end
 
       it 'returns amount for all order items without a discount' do
-        expect(Mercadona::DiscountResolver).not_to receive(:call)
         expect(Mercadona::AmountFormatter)
           .to receive(:call)
           .with(
@@ -42,8 +41,9 @@ RSpec.describe Mercadona::Checkout do
     end
 
     context 'when order items with a discount' do
-      let(:discount_rules) { { product_coffee.product_code => [] } }
       let(:discount_items_amount) { 420 }
+      let(:type) { proc { discount_items_amount } }
+      let(:discount_rules) { { product_coffee.product_code => create(:discount_rule, :bulk_discount, type: type) } }
       let(:expected_amount) do
         (product_tea.price_in_fractional_currency +
           product_strawberry.price_in_fractional_currency +
@@ -51,14 +51,6 @@ RSpec.describe Mercadona::Checkout do
       end
 
       it 'returns amount for all order items using discount for certain items' do
-        expect(Mercadona::DiscountResolver)
-          .to receive(:call)
-          .with(
-            discount_rules,
-            product_coffee,
-            1
-          )
-          .and_return(discount_items_amount)
         expect(Mercadona::AmountFormatter)
           .to receive(:call)
           .with(

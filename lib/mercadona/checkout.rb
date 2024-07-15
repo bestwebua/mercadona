@@ -27,9 +27,15 @@ module Mercadona
       discount_rules.key?(order_item.product_code)
     end
 
+    def amount_with_discount(order_item, quantity)
+      discount_rules[order_item.product_code].amount_with_discount(order_item, quantity)
+    end
+
     def calculate_amount
+      # Because the technical brief does not specify the pricing method (whether per item or per specific weight),
+      # we will simplify our calculations by using the price per item as the reference point.
       basket.tally.inject(Mercadona::Checkout::INITIAL_AMOUNT) do |amount, (order_item, quantity)|
-        next amount + Mercadona::DiscountResolver.call(discount_rules, order_item, quantity) if discount_order_item?(order_item)
+        next amount + amount_with_discount(order_item, quantity) if discount_order_item?(order_item)
 
         amount + (order_item.price_in_fractional_currency * quantity)
       end

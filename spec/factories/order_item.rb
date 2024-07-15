@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :order_item, class: 'Mercadona::OrderItem' do
+  factory :order_item, class: 'Mercadona::Entity::OrderItem' do
     product_code { random_product_code }
     name { product_codes[product_code] }
     price { random_product_price }

@@ -52,15 +52,20 @@ gem install mercadona
 ```ruby
 require 'mercadona'
 
+# Define discount rules
+bogo_discount = Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Bogo, condition: '>=', quantity: 2)
+quantity_discount = Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Quantity, condition: '>=', quantity: 3, discount: 0.5)
+bulk_discount = Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Bulk, condition: '>=', quantity: 3, discount: 1/3r)
+
 # Define checkout with discount rules specified through product codes
 checkout = Mercadona::Checkout.new(
-  'GR_1' => Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Bogo, condition: '>=', quantity: 2),
-  'SR_1' => Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Quantity, condition: '>=', quantity: 3, discount: 0.5),
-  'CF_1' => Mercadona::Entity::DiscountRule.new(type: Mercadona::Discount::Bulk, condition: '>=', quantity: 3, discount: 1/3r)
+  'GR1' => bogo_discount,
+  'SR1' => quantity_discount,
+  'CF1' => bulk_discount
 )
 
 # Define order items
-green_tea = Mercadona::Entity::OrderItem.new(product_code: 'GR_1', name: 'Green Tea', price: 3.11)
+green_tea = Mercadona::Entity::OrderItem.new(product_code: 'GR1', name: 'Green Tea', price: 3.11)
 strawberries = Mercadona::Entity::OrderItem.new(product_code: 'SR1', name: 'Strawberries', price: 5.0)
 coffee = Mercadona::Entity::OrderItem.new(product_code: 'CF1', name: 'Coffee', price: 11.23)
 
@@ -68,7 +73,7 @@ coffee = Mercadona::Entity::OrderItem.new(product_code: 'CF1', name: 'Coffee', p
 [green_tea, strawberries, coffee].each { |order_item| checkout.scan(order_item) }
 
 # Calculate total amount using current discount rules
-checkout.total => "£19.34"
+checkout.total # => "£19.34"
 ```
 
 ### Customization
@@ -78,7 +83,7 @@ You can define your custom discount logic. Please follow the example below:
 ```ruby
 require 'mercadona'
 
-class Bogo < Mercadona::Discount::Base
+class YourCustomDiscount < Mercadona::Discount::Base
   def call
     return amount_without_discount unless discount_case?
 
